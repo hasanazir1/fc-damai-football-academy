@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "FC Damai Football Academy"
+description = "A bold, welcoming website for FC Damai Football Academy in Ampang, Malaysia, helping parents discover training details, membership offers, coaching, and contact the academy."
+version = "1.0.0"
+id = "artifacts/fc-damai-academy"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22317
+
+[services.development]
+run = "pnpm --filter @workspace/fc-damai-academy run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/fc-damai-academy", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/fc-damai-academy/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22317"
+BASE_PATH = "/"
